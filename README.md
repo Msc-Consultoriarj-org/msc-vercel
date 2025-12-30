@@ -1,6 +1,42 @@
 # MSC Consultoria - Sistema de Gerenciamento Interno
 
-Aplicativo web interno para gerenciar equipes, projetos e integrações de desenvolvimento da MSC Consultoria.
+> **Plataforma interna para gerenciar equipes, projetos e integrações de desenvolvimento da MSC Consultoria**
+
+Aplicativo web interno com arquitetura dual-environment: **Manus** para desenvolvimento/prototipagem e **Vercel + Supabase** para produção.
+
+## 🎯 Ambientes
+
+O projeto opera em **dois ambientes distintos** com propósitos específicos:
+
+### 🔧 Desenvolvimento (Manus)
+- **URL**: https://msc.manus.space
+- **Banco**: MySQL/TiDB (Manus gerenciado)
+- **Uso**: Prototipagem, testes, validação de features
+- **Deploy**: Automático via checkpoint
+- **Documentação**: [Deploy-Manus.MD](./Deploy-Manus.MD)
+
+### 🚀 Produção (Vercel + Supabase)
+- **URL**: https://msc-consultoria-manus.vercel.app
+- **Banco**: PostgreSQL (Supabase)
+- **Uso**: Versões estáveis, uso real pela equipe
+- **Deploy**: Automático via GitHub push
+- **Documentação**: [Deploy-Vercel.MD](./Deploy-Vercel.MD)
+
+### 🔄 Workflow Completo
+
+```
+Desenvolvimento (Manus) → Validação → Produção (Vercel)
+```
+
+**Processo**:
+1. Desenvolver e testar features no Manus
+2. Coletar feedback e validar com a equipe
+3. Quando maduro, fazer push para GitHub
+4. Deploy automático na Vercel
+
+Veja o fluxo completo em **[WORKFLOW.MD](./WORKFLOW.MD)**
+
+---
 
 ## 🚀 Funcionalidades
 

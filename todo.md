@@ -80,3 +80,16 @@
 - [x] Otimizar layout para telas mobile
 - [ ] Adicionar suporte a gestos touch
 - [ ] Testar responsividade em diferentes tamanhos de tela
+
+
+## Fase 10: Dual Deployment (Manus + Vercel/Supabase)
+- [x] Criar arquitetura serverless para Vercel
+- [x] Configurar variáveis de ambiente para Vercel
+- [x] Integrar Supabase Auth para produção
+- [x] Migrar banco de dados para Supabase (PostgreSQL)
+- [x] Criar vercel.json com configurações de rotas
+- [x] Adaptar tRPC para funcionar em ambiente serverless
+- [x] Criar Deploy-Manus.MD com guia completo
+- [x] Criar Deploy-Vercel.MD com guia completo
+- [x] Documentar workflow de desenvolvimento → produção
+- [ ] Testar deploy em ambos os ambientes
