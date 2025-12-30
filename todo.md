@@ -93,3 +93,16 @@
 - [x] Criar Deploy-Vercel.MD com guia completo
 - [x] Documentar workflow de desenvolvimento → produção
 - [ ] Testar deploy em ambos os ambientes
+
+
+## Fase 11: Correção Deploy Vercel + Supabase
+- [x] Adaptar schema de MySQL para PostgreSQL (drizzle/schema-postgres.ts)
+- [x] Criar arquivo de migração SQL para Supabase
+- [x] Executar migração SQL no Supabase (tabelas criadas)
+- [x] Configurar drizzle.config.postgres.ts para PostgreSQL
+- [x] Instalar driver PostgreSQL (postgres)
+- [x] Criar VERCEL-SETUP.md com guia completo
+- [ ] Copiar variáveis do Manus para Vercel
+- [ ] Configurar variáveis de ambiente na Vercel
+- [ ] Fazer push para GitHub e testar deploy
+- [ ] Validar aplicação funcionando na Vercel
