@@ -21,15 +21,18 @@ import {
 } from "@/components/ui/sidebar";
 import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { LayoutDashboard, LogOut, PanelLeft, Users } from "lucide-react";
+import { LayoutDashboard, LogOut, PanelLeft, Users, FolderKanban, Package, Settings } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
 
 const menuItems = [
-  { icon: LayoutDashboard, label: "Page 1", path: "/" },
-  { icon: Users, label: "Page 2", path: "/some-path" },
+  { icon: LayoutDashboard, label: "Dashboard", path: "/" },
+  { icon: Users, label: "Funcionários", path: "/employees" },
+  { icon: FolderKanban, label: "Projetos", path: "/projects" },
+  { icon: Package, label: "Dependências", path: "/dependencies" },
+  { icon: Settings, label: "Integrações", path: "/integrations" },
 ];
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";
@@ -170,11 +173,14 @@ function DashboardLayoutContent({
               </button>
               {!isCollapsed ? (
                 <div className="flex items-center gap-2 min-w-0">
+                  <img src="/msc-logo.png" alt="MSC" className="h-8 w-auto" />
                   <span className="font-semibold tracking-tight truncate">
-                    Navigation
+                    MSC Consultoria
                   </span>
                 </div>
-              ) : null}
+              ) : (
+                <img src="/msc-logo.png" alt="MSC" className="h-8 w-8 object-contain" />
+              )}
             </div>
           </SidebarHeader>
 
