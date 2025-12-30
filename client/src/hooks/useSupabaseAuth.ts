@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+// Só criar o cliente Supabase se as variáveis estiverem definidas
+let supabase: SupabaseClient | null = null;
+if (supabaseUrl && supabaseAnonKey) {
+  supabase = createClient(supabaseUrl, supabaseAnonKey);
+}
 
 interface User {
   id: string;
@@ -17,6 +22,12 @@ export function useSupabaseAuth() {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
+    // Se não há cliente Supabase configurado, não fazer nada
+    if (!supabase) {
+      setLoading(false);
+      return;
+    }
+
     // Check active session
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
@@ -47,6 +58,8 @@ export function useSupabaseAuth() {
   }, []);
 
   const logout = async () => {
+    if (!supabase) return;
+    
     try {
       await supabase.auth.signOut();
       setUser(null);
@@ -62,5 +75,6 @@ export function useSupabaseAuth() {
     error,
     isAuthenticated: !!user,
     logout,
+    supabase, // Exportar o cliente para uso na página de login
   };
 }
