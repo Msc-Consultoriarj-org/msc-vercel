@@ -1,0 +1,36 @@
+# Variáveis de Ambiente para Vercel
+# Copie e cole cada linha no painel da Vercel (Settings → Environment Variables)
+
+# === BANCO DE DADOS ===
+DATABASE_URL=postgresql://postgres.rphisaetwcqosukcmsfi:Msc-Consultoria-supabase@aws-0-us-east-1.pooler.supabase.com:6543/postgres?pgbouncer=true
+
+# === SUPABASE (Autenticação) ===
+VITE_SUPABASE_URL=https://rphisaetwcqosukcmsfi.supabase.co
+VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJwaGlzYWV0d2Nxb3N1a2Ntc2ZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcxMzE2NTAsImV4cCI6MjA4MjcwNzY1MH0.70GWdn4KruF6amiJ8tQ6AiFZ4x3dflgWnUwn2v7H5JI
+NEXT_PUBLIC_SUPABASE_URL=https://rphisaetwcqosukcmsfi.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJwaGlzYWV0d2Nxb3N1a2Ntc2ZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcxMzE2NTAsImV4cCI6MjA4MjcwNzY1MH0.70GWdn4KruF6amiJ8tQ6AiFZ4x3dflgWnUwn2v7H5JI
+
+# === JWT SECRET ===
+JWT_SECRET=itJjdPsFWOhgoDI7sqhcOPGC4SKuC3YTsMF6Va4okcPNaM8M8GUfG7v9o+E1+C3J5oQ6OjsSABHc6VlwNIZlLA==
+
+# === APP BRANDING ===
+VITE_APP_TITLE=MSC Consultoria
+VITE_APP_LOGO=/msc_logo_concept_04.png
+
+# === AMBIENTE ===
+NODE_ENV=production
+VERCEL=1
+
+# ===================================================================
+# INSTRUÇÕES:
+# 1. Acesse: https://vercel.com/dashboard
+# 2. Selecione o projeto msc-consultoria-manus (ou crie novo)
+# 3. Vá em Settings → Environment Variables
+# 4. Para cada linha acima (exceto comentários #):
+#    - Clique em "Add New"
+#    - Cole o NOME da variável (antes do =)
+#    - Cole o VALOR da variável (depois do =)
+#    - Selecione "Production, Preview, Development"
+#    - Clique em "Save"
+# 5. Após adicionar todas, vá em Deployments e faça Redeploy
+# ===================================================================

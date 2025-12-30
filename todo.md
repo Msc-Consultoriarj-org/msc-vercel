@@ -109,13 +109,18 @@
 
 
 ## Fase 12: Deploy Vercel + GitHub (Supabase Auth)
-- [ ] Configurar Supabase Auth (email/password) para produção
-- [ ] Criar adapter de autenticação que detecta ambiente (Manus vs Vercel)
-- [ ] Adaptar server/routers.ts para usar Supabase Auth em produção
-- [ ] Criar página de login customizada para Vercel
-- [ ] Atualizar vercel.json com configurações corretas
-- [ ] Preparar código para commit no msc-vercel
-- [ ] Fazer commit e push para https://github.com/Msc-Consultoriarj-org/msc-vercel
-- [ ] Configurar variáveis de ambiente na Vercel (DATABASE_URL, Supabase keys)
+- [x] Configurar Supabase Auth (email/password) para produção
+- [x] Criar cliente Supabase (server/_core/supabase.ts)
+- [x] Criar hook useSupabaseAuth para frontend
+- [x] Criar página de login customizada (/login)
+- [x] Adicionar rota de login no App.tsx
+- [x] Criar DEPLOY-VERCEL-SIMPLES.md com guia completo
+- [x] Criar VARIAVEIS-VERCEL.txt com todas as env vars
+- [x] Fazer commit das alterações
+- [x] Criar repositório msc-vercel no GitHub
+- [x] Fazer push para https://github.com/Msc-Consultoriarj-org/msc-vercel
+- [ ] Conectar repositório na Vercel
+- [ ] Configurar variáveis de ambiente na Vercel
 - [ ] Aguardar build automático e testar deploy
+- [ ] Criar primeiro usuário em /login
 - [ ] Validar login, banco de dados e funcionalidades em produção
