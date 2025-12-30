@@ -106,3 +106,16 @@
 - [ ] Configurar variáveis de ambiente na Vercel
 - [ ] Fazer push para GitHub e testar deploy
 - [ ] Validar aplicação funcionando na Vercel
+
+
+## Fase 12: Deploy Vercel + GitHub (Supabase Auth)
+- [ ] Configurar Supabase Auth (email/password) para produção
+- [ ] Criar adapter de autenticação que detecta ambiente (Manus vs Vercel)
+- [ ] Adaptar server/routers.ts para usar Supabase Auth em produção
+- [ ] Criar página de login customizada para Vercel
+- [ ] Atualizar vercel.json com configurações corretas
+- [ ] Preparar código para commit no msc-vercel
+- [ ] Fazer commit e push para https://github.com/Msc-Consultoriarj-org/msc-vercel
+- [ ] Configurar variáveis de ambiente na Vercel (DATABASE_URL, Supabase keys)
+- [ ] Aguardar build automático e testar deploy
+- [ ] Validar login, banco de dados e funcionalidades em produção
