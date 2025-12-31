@@ -19,9 +19,19 @@ const loadAnalytics = () => {
     return;
   }
 
+  let normalizedEndpoint: string;
+
+  try {
+    const parsedEndpoint = new URL(endpoint);
+    normalizedEndpoint = parsedEndpoint.toString().replace(/\/$/, "");
+  } catch {
+    console.error("Umami analytics disabled: invalid VITE_ANALYTICS_ENDPOINT", endpoint);
+    return;
+  }
+
   const script = document.createElement("script");
   script.defer = true;
-  script.src = `${endpoint.replace(/\/$/, "")}/umami`;
+  script.src = `${normalizedEndpoint}/umami`;
   script.dataset.websiteId = websiteId;
   document.body.appendChild(script);
 };
