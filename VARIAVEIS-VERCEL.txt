@@ -13,6 +13,13 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzd
 # === JWT SECRET ===
 JWT_SECRET=itJjdPsFWOhgoDI7sqhcOPGC4SKuC3YTsMF6Va4okcPNaM8M8GUfG7v9o+E1+C3J5oQ6OjsSABHc6VlwNIZlLA==
 
+# === LOGIN ADMINISTRATIVO ===
+ADMIN_EMAIL=admin@exemplo.com
+ADMIN_PASSWORD=troque-essa-senha
+ADMIN_NAME=Administrador MSC
+ADMIN_OPEN_ID=msc-admin
+OWNER_OPEN_ID=msc-admin
+
 # === APP BRANDING ===
 VITE_APP_TITLE=MSC Consultoria
 VITE_APP_LOGO=/msc_logo_concept_04.png

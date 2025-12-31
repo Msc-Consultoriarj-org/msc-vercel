@@ -10,6 +10,32 @@ import "./index.css";
 
 const queryClient = new QueryClient();
 
+const loadAnalytics = () => {
+  const endpoint = import.meta.env.VITE_ANALYTICS_ENDPOINT;
+  const websiteId = import.meta.env.VITE_ANALYTICS_WEBSITE_ID;
+
+  if (!endpoint || !websiteId) {
+    console.info("Umami analytics disabled: missing VITE_ANALYTICS_ENDPOINT or VITE_ANALYTICS_WEBSITE_ID.");
+    return;
+  }
+
+  let normalizedEndpoint: string;
+
+  try {
+    const parsedEndpoint = new URL(endpoint);
+    normalizedEndpoint = parsedEndpoint.toString().replace(/\/$/, "");
+  } catch {
+    console.error("Umami analytics disabled: invalid VITE_ANALYTICS_ENDPOINT", endpoint);
+    return;
+  }
+
+  const script = document.createElement("script");
+  script.defer = true;
+  script.src = `${normalizedEndpoint}/umami`;
+  script.dataset.websiteId = websiteId;
+  document.body.appendChild(script);
+};
+
 const redirectToLoginIfUnauthorized = (error: unknown) => {
   if (!(error instanceof TRPCClientError)) return;
   if (typeof window === "undefined") return;
@@ -65,6 +91,8 @@ if ('serviceWorker' in navigator) {
       });
   });
 }
+
+loadAnalytics();
 
 createRoot(document.getElementById("root")!).render(
   <trpc.Provider client={trpcClient} queryClient={queryClient}>
