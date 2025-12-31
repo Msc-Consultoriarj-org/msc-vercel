@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { createClient } from '@supabase/supabase-js';
+import { trpc } from "@/lib/trpc";
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
@@ -15,6 +16,22 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
+  const [adminEmail, setAdminEmail] = useState("");
+  const [adminPassword, setAdminPassword] = useState("");
+  const adminLogin = trpc.auth.adminLogin.useMutation({
+    onSuccess: () => {
+      toast.success("Login administrativo realizado!");
+      window.location.href = "/";
+    },
+    onError: (error) => {
+      toast.error(error.message || "Não foi possível autenticar como admin");
+    },
+  });
+
+  const handleAdminLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await adminLogin.mutateAsync({ email: adminEmail, password: adminPassword });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -127,6 +144,49 @@ export default function Login() {
                 : "Não tem uma conta? Cadastre-se"
               }
             </button>
+          </div>
+
+          <div className="mt-8 border-t pt-6 space-y-4">
+            <div className="space-y-1 text-center">
+              <CardTitle className="text-xl">Acesso Administrativo</CardTitle>
+              <CardDescription>
+                Entre com as credenciais internas para acessar como admin
+              </CardDescription>
+            </div>
+
+            <form onSubmit={handleAdminLogin} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="admin-email">Email do admin</Label>
+                <Input
+                  id="admin-email"
+                  type="email"
+                  placeholder="admin@exemplo.com"
+                  value={adminEmail}
+                  onChange={(e) => setAdminEmail(e.target.value)}
+                  required
+                  disabled={adminLogin.isPending}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="admin-password">Senha do admin</Label>
+                <Input
+                  id="admin-password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={adminPassword}
+                  onChange={(e) => setAdminPassword(e.target.value)}
+                  required
+                  disabled={adminLogin.isPending}
+                />
+              </div>
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={adminLogin.isPending}
+              >
+                {adminLogin.isPending ? "Entrando..." : "Entrar como Admin"}
+              </Button>
+            </form>
           </div>
         </CardContent>
       </Card>

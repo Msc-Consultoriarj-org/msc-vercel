@@ -1,10 +1,12 @@
-import { COOKIE_NAME } from "@shared/const";
+import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
 import { TRPCError } from "@trpc/server";
+import { sdk } from "./_core/sdk";
+import { ENV } from "./_core/env";
 
 export const appRouter = router({
   system: systemRouter,
@@ -18,6 +20,54 @@ export const appRouter = router({
         success: true,
       } as const;
     }),
+    adminLogin: publicProcedure
+      .input(z.object({
+        email: z.string().email(),
+        password: z.string().min(1),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const adminEmail = ENV.adminEmail;
+        const adminPassword = ENV.adminPassword;
+        const adminOpenId = ENV.adminOpenId || ENV.ownerOpenId;
+
+        if (!adminEmail || !adminPassword || !adminOpenId) {
+          throw new TRPCError({
+            code: "PRECONDITION_FAILED",
+            message: "Admin login is not configured",
+          });
+        }
+
+        if (input.email !== adminEmail || input.password !== adminPassword) {
+          throw new TRPCError({
+            code: "UNAUTHORIZED",
+            message: "Credenciais inválidas",
+          });
+        }
+
+        const adminName = ENV.adminName || input.email.split("@")[0] || "Admin";
+
+        await db.upsertUser({
+          openId: adminOpenId,
+          name: adminName,
+          email: adminEmail,
+          loginMethod: "admin-credential",
+          role: "admin",
+          lastSignedIn: new Date(),
+        });
+
+        const sessionToken = await sdk.createSessionToken(adminOpenId, {
+          name: adminName,
+          expiresInMs: ONE_YEAR_MS,
+        });
+
+        const cookieOptions = getSessionCookieOptions(ctx.req);
+        ctx.res.cookie(COOKIE_NAME, sessionToken, {
+          ...cookieOptions,
+          maxAge: ONE_YEAR_MS,
+        });
+
+        return { success: true } as const;
+      }),
   }),
 
   employees: router({
