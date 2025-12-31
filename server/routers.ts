@@ -7,6 +7,7 @@ import * as db from "./db";
 import { TRPCError } from "@trpc/server";
 import { sdk } from "./_core/sdk";
 import { ENV } from "./_core/env";
+import { getAdminAccountByEmail } from "./adminAccounts";
 
 export const appRouter = router({
   system: systemRouter,
@@ -26,30 +27,37 @@ export const appRouter = router({
         password: z.string().min(1),
       }))
       .mutation(async ({ input, ctx }) => {
-        const adminEmail = ENV.adminEmail;
-        const adminPassword = ENV.adminPassword;
-        const adminOpenId = ENV.adminOpenId || ENV.ownerOpenId;
+        const account = getAdminAccountByEmail(input.email);
 
-        if (!adminEmail || !adminPassword || !adminOpenId) {
-          throw new TRPCError({
-            code: "PRECONDITION_FAILED",
-            message: "Admin login is not configured",
-          });
-        }
-
-        if (input.email !== adminEmail || input.password !== adminPassword) {
+        if (!account) {
           throw new TRPCError({
             code: "UNAUTHORIZED",
             message: "Credenciais inválidas",
           });
         }
 
-        const adminName = ENV.adminName || input.email.split("@")[0] || "Admin";
+        if (account.password !== input.password) {
+          throw new TRPCError({
+            code: "UNAUTHORIZED",
+            message: "Credenciais inválidas",
+          });
+        }
+
+        const adminOpenId = account.openId || ENV.adminOpenId || ENV.ownerOpenId;
+
+        if (!adminOpenId) {
+          throw new TRPCError({
+            code: "PRECONDITION_FAILED",
+            message: "Admin login is not configured",
+          });
+        }
+
+        const adminName = account.name || ENV.adminName || input.email.split("@")[0] || "Admin";
 
         await db.upsertUser({
           openId: adminOpenId,
           name: adminName,
-          email: adminEmail,
+          email: account.email,
           loginMethod: "admin-credential",
           role: "admin",
           lastSignedIn: new Date(),

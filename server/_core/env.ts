@@ -8,6 +8,7 @@ export const ENV = {
   adminPassword: process.env.ADMIN_PASSWORD ?? "",
   adminName: process.env.ADMIN_NAME ?? "",
   adminOpenId: process.env.ADMIN_OPEN_ID ?? "",
+  adminAccountsJson: process.env.ADMIN_ACCOUNTS_JSON ?? "",
   isProduction: process.env.NODE_ENV === "production",
   forgeApiUrl: process.env.BUILT_IN_FORGE_API_URL ?? "",
   forgeApiKey: process.env.BUILT_IN_FORGE_API_KEY ?? "",
